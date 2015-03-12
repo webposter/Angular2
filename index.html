@@ -2,10 +2,43 @@
 <html>
 <head>
 	<!-- Nathan Chan Angular JS Assignment 2 -->
+    <style type="text/css">
+        .css-form input.ng-invalid.ng-dirty { color: #FF0000; }
+    </style>
+
 </head>
 
 <body ng-app="myApp">
-	
+    <form name="myForm" ng-controller="ExampleController" class="css-form">
+        Name: (Required Field)<br />
+        <input type="text" name="name" ng-model="userName"
+                     required
+                     ng-pattern="/^[A-z]+$/"
+                     ng-maxlenght="20" />
+
+        <!-- name validation error messages -->
+        <span ng-show="myForm.name.$error.maxlength">  More than 20 characters not permitted for name!</span>
+        <span ng-show="myForm.name.$error.pattern">  Only letters are allowed for name!</span>
+
+        <br />Password: (Required Field)
+        <br /><input type="password" name="password" ng-model="password"
+                     required
+                     ng-minlength="8"
+                     ng-maxlength="20" />
+
+        <!-- password validation error messages -->
+        <span ng-show="myForm.password.$error.maxlength">  More than 20 characters not permitted for password!</span>
+        <span ng-show="myForm.password.$error.minlength">  Password must be at least 8 characters!</span>
+
+        <br />Password Confirmation: (Required Field)
+        <br /><input type="password" name="confirmation" ng-model="confirmation"
+                     ng-match="password1"
+                     required />
+
+        <!-- password confirmation error messages -->
+        <span ng-show="password != confirmation">  Passwords do not match!</span> <br />
+        <button ng-click="update(userAddress)" ng-hide="myForm.$invalid || password != confirmation">Submit</button>
+    </form>
 	
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-route.min.js"></script>
